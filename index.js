@@ -2,9 +2,13 @@ require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var session = require('express-session');
 var passport = require('passport');
+var mongoose = require('mongoose');
 
+mongoose.connect(process.env.DB_URL);
 
+require('./config/passport');
 
 var app = express();
 
@@ -16,7 +20,7 @@ app.use(session({
 	secret: process.env.SESSION_SECRET
 }))
 app.use(passport.initialize())
-app.use(passport.session)
+app.use(passport.session())
 
 
 app.get('/', (req,res) => {
